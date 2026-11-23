@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giuli Edits · Portfolio</title>
+<style>
+@font-face{font-family:"Krona One";src:url(f/krona.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Inter;src:url(f/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Inter;src:url(f/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Inter;src:url(f/inter-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:Inter;src:url(f/inter-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(f/iserif-i.woff2) format("woff2");font-style:italic;font-weight:400;font-display:swap}
+</style>
+<style>
+/* VOICE: a confident editor's showreel, playful but tidy, Spanish rioplatense.
+   IDEA: a deck of reels fanned on a turntable, under a poster title that waves like a flag.
+   PICTURE: the rotating wheel of live vertical reels, the waving PORTFOLIO over an orange block.
+   COLOUR and TYPE: warm grey ground, Giuli orange block, deep reel blue band; Krona One + Inter + Instrument Serif italic.
+   LAYOUT: hero poster (title + wheel) fills the first screen, then works grid, services, about, contact band. */
+:root{color-scheme:light dark;
+ --bg:light-dark(#E8E5E0,#131317);--ink:light-dark(#15151C,#EEE9E1);--mut:light-dark(#5E5B57,#A9A49C);
+ --line:light-dark(#C9C4BC,#34343C);--card:light-dark(#F4F1EC,#1C1C22);
+ --or:#E8692F;--or2:light-dark(#C9541E,#F28A55);--blue:#1C2470;--blue2:#2A3594;--cream:#F5EFE6}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.kr{font-family:"Krona One",Inter,sans-serif;font-weight:400;letter-spacing:.01em}
+.it{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column}
+.top{position:relative;padding:clamp(24px,4vw,48px) max(5vw,18px) clamp(18px,3vw,34px)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;position:relative;z-index:3}
+.hi{font-size:clamp(11px,1.15vw,14px);line-height:1.15;text-transform:uppercase}
+.rt{display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)}
+.nav{display:flex;gap:clamp(12px,2.4vw,30px);align-items:center;font-size:14px;font-weight:500}
+.nav a{text-decoration:none;padding:10px 2px}
+.nav a:hover{color:var(--or2)}
+.mark{width:42px;height:42px;flex:none}
+.titlewrap{position:relative;margin:clamp(10px,1.6vw,22px) 0 clamp(8px,1.4vw,18px);display:grid;place-items:center}
+.block{position:absolute;left:50%;top:-16%;bottom:-30%;width:clamp(80px,15vw,200px);transform:translateX(-50%);background:var(--or);z-index:0}
+.title{position:relative;z-index:1;display:flex;justify-content:center;font-size:clamp(30px,10vw,112px);margin:0;line-height:1;perspective:900px;padding:.36em 0;white-space:nowrap}
+.col{position:relative;display:inline-block}
+.col .g{visibility:hidden}
+.col .f,.col .o{position:absolute;left:0;top:0;will-change:transform}
+.col .o{color:transparent;-webkit-text-stroke:max(1px,.018em) var(--ink)}
+.meta{display:flex;justify-content:space-between;gap:16px;font-size:clamp(11px,1.1vw,13px);text-transform:uppercase;letter-spacing:.04em;position:relative;z-index:3}
+.plus{position:absolute;width:11px;height:11px;color:var(--mut)}
+.plus::before,.plus::after{content:"";position:absolute;background:currentColor}
+.plus::before{left:5px;top:0;width:1px;height:11px}.plus::after{top:5px;left:0;height:1px;width:11px}
+.tri{position:absolute;top:50%;width:0;height:0;border:6px solid transparent;transform:translateY(-50%)}
+.tri.l{left:max(1.6vw,6px);border-left-color:var(--ink)}.tri.r{right:max(1.6vw,6px);border-right-color:var(--ink)}
+
+/* ---------- WHEEL ---------- */
+.wheel{position:relative;flex:1;min-height:clamp(400px,60svh,680px);overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.wheel.drag{cursor:grabbing}
+.card{position:absolute;left:0;top:0;border-radius:clamp(12px,1.4vw,20px);overflow:hidden;background:#000;box-shadow:0 18px 40px -18px rgba(0,0,0,.55);will-change:transform;padding:0;border:0;cursor:pointer}
+.card video,.card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.card .tag{position:absolute;left:10px;right:10px;bottom:10px;padding:8px 10px;border-radius:10px;background:rgba(15,15,20,.72);color:#fff;font-size:12px;font-weight:600;text-align:left;opacity:0;transform:translateY(6px);transition:.25s}
+.card.front .tag{opacity:1;transform:none}
+.hub{position:absolute;pointer-events:none;color:var(--ink)}
+.hub svg{width:100%;height:100%;overflow:visible}
+.hub .spin{transform-origin:50% 50%;animation:spin 40s linear infinite}
+.me{position:absolute;left:50%;transform:translateX(-50%);text-align:center;font-size:13px;line-height:1.2;pointer-events:auto;text-decoration:none;padding:6px 10px;z-index:40}
+.me b{display:block;font-size:10px}
+.arrow{position:absolute;top:44%;z-index:50;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(6px);cursor:pointer;display:grid;place-items:center}
+.arrow:hover{border-color:var(--or)}
+.arrow.l{left:max(2vw,10px)}.arrow.r{right:max(2vw,10px)}
+.arrow svg{width:16px;height:16px}
+.hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);font-size:12px;color:var(--mut);z-index:40;white-space:nowrap}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- SECTIONS ---------- */
+.band{padding:clamp(56px,8vw,112px) max(5vw,18px)}
+.in{max-width:1240px;margin:0 auto}
+h2{font-family:"Krona One",Inter,sans-serif;font-weight:400;font-size:clamp(26px,3.6vw,46px);line-height:1.08;margin:0 0 12px;text-wrap:balance}
+.lead{font-size:clamp(16px,1.4vw,18px);color:var(--mut);max-width:60ch;margin:0 0 clamp(28px,4vw,48px)}
+.works{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:clamp(16px,2vw,26px)}
+.work{display:flex;flex-direction:column;gap:12px;text-align:left;background:none;border:0;padding:0;cursor:pointer}
+.thumb{position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#000;width:100%}
+.thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .play{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:50%;background:var(--or);display:grid;place-items:center;transition:transform .25s}
+.work:hover .play{transform:scale(1.1)}
+.work h3{margin:0;font-size:18px;line-height:1.2;font-weight:700}
+.work .k{font-size:13px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.dark{background:var(--blue);color:#F3EEE6}
+.dark .lead{color:#C4C6E6}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:clamp(14px,2vw,24px)}
+.s{background:var(--blue2);border-radius:20px;padding:26px 24px 28px;position:relative;overflow:hidden}
+.s svg{width:44px;height:44px;margin-bottom:18px}
+.s h3{margin:0 0 8px;font-size:20px;line-height:1.2}
+.s p{margin:0;color:#D5D7F0;font-size:15.5px}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(28px,5vw,80px);align-items:center}
+.about .big{font-size:clamp(30px,4.4vw,58px);line-height:1.05;margin:0;text-wrap:balance}
+.about .big .it{color:var(--or2)}
+.about p{font-size:17px;margin:0 0 14px;max-width:62ch}
+.cv{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr);gap:6px 18px;margin:22px 0 0;font-size:15px}
+.cv dt{grid-column:1;font-weight:700;padding-top:2px}.cv dd{grid-column:2;margin:0;color:var(--mut)}.cv dt:not(:first-child){margin-top:10px}.cv dt:not(:first-child)+dd{margin-top:10px}
+@media(max-width:600px){.cv{grid-template-columns:minmax(0,1fr)}.cv dt,.cv dd{grid-column:1}.cv dt+dd{margin-top:0!important}}
+.cta{background:var(--or);color:#16120F;text-align:center}
+.cta h2{font-size:clamp(32px,5.6vw,74px);margin-bottom:10px}
+.cta h2 .it{font-family:"Instrument Serif",serif;font-size:1.15em}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;background:#16120F;color:#F5EFE6;text-decoration:none;font-weight:600;font-size:16px}
+.btn.alt{background:transparent;color:#16120F;border:2px solid #16120F}
+.btn:hover{transform:translateY(-2px)}
+.note{font-size:13px;margin-top:18px;opacity:.75}
+footer{padding:26px max(5vw,18px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mut)}
+
+/* ---------- MODAL ---------- */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(8,8,12,.86);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px);gap:clamp(16px,3vw,40px)}
+.modal.on{display:flex}
+.modal video{height:min(86svh,860px);aspect-ratio:9/16;max-width:100%;border-radius:18px;background:#000}
+.info{color:#F3EEE6;width:min(340px,100%)}
+.info .k{color:#F28A55;font-size:14px;font-weight:600}
+.info h3{font-family:"Krona One",sans-serif;font-weight:400;font-size:24px;line-height:1.15;margin:8px 0 12px}
+.info p{color:#CFCAC2;margin:0 0 16px}
+.info .chip{border-color:#55545C}
+.mnav{display:flex;gap:10px;margin-top:24px}
+.mbtn{min-width:48px;height:48px;border-radius:999px;border:1px solid #55545C;background:transparent;color:#fff;cursor:pointer;padding:0 16px}
+.mbtn:hover{border-color:var(--or)}
+.close{position:absolute;top:14px;right:14px}
+
+@media(max-width:820px){.about{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){
+ .nav{display:none}
+ .titlewrap{margin:26px 0 22px}
+ .meta{font-size:11px}
+ .modal{flex-direction:column;justify-content:flex-start;overflow:auto;padding-top:64px}
+ .modal video{height:auto;width:min(100%,62svh*.5625)}
+ .hint{display:none}
+ .arrow{top:auto;bottom:16px;width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){.hub .spin{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="inicio">
+ <div class="top">
+  <span class="plus" style="left:max(5vw,18px);top:14px"></span>
+  <span class="plus" style="left:35%;top:14px"></span>
+  <span class="plus" style="left:65%;top:14px"></span>
+  <span class="plus" style="right:max(5vw,18px);top:14px"></span>
+  <span class="plus" style="left:max(5vw,18px);bottom:0"></span>
+  <span class="plus" style="left:35%;bottom:0"></span>
+  <span class="plus" style="left:65%;bottom:0"></span>
+  <span class="plus" style="right:max(5vw,18px);bottom:0"></span>
+  <span class="tri l"></span><span class="tri r"></span>
+  <div class="row">
+   <div class="hi kr">Bienvenido<br>a mi</div>
+   <div class="rt"><nav class="nav" aria-label="Secciones">
+    <a href="#trabajos">Trabajos</a><a href="#servicios">Servicios</a><a href="#sobre-mi">Sobre mí</a><a href="#contacto">Contacto</a>
+   </nav>
+   <svg class="mark" viewBox="0 0 44 44" aria-label="Giuli Edits">
+    <circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M22 6 L26 18 L38 22 L26 26 L22 38 L18 26 L6 22 L18 18 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="22" cy="22" r="3.6" fill="#E8692F"/>
+   </svg></div>
+  </div>
+  <div class="titlewrap">
+   <div class="block" aria-hidden="true"></div>
+   <h1 class="title kr" id="title" aria-label="Portfolio">PORTFOLIO</h1>
+  </div>
+  <div class="meta"><span>Giuliano Sanguinetti · Giuli Edits</span><span>Edición &amp; motion graphics</span></div>
+ </div>
+
+ <div class="wheel" id="wheel" aria-label="Rueda de reels: arrastrá para girar">
+  <div class="hub" id="hub" aria-hidden="true">
+   <svg viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="99" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="3 5"/>
+    <g class="spin"><defs><path id="cp" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/></defs>
+     <text font-family="Krona One" font-size="7" letter-spacing="2" fill="currentColor" fill-opacity=".55"><textPath href="#cp">PORTFOLIO · GIULI EDITS · PORTFOLIO · GIULI EDITS · PORTFOLIO · GIULI EDITS ·</textPath></text></g>
+   </svg>
+  </div>
+  <a class="me kr" id="me" href="#sobre-mi"><b>▲</b>YO</a>
+  <button class="arrow l" id="prev" aria-label="Reel anterior"><svg viewBox="0 0 16 16"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+  <button class="arrow r" id="next" aria-label="Reel siguiente"><svg viewBox="0 0 16 16"><path d="m6 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+ </div>
+</header>
+
+<main>
+ <section class="band" id="trabajos">
+  <div class="in">
+   <h2>Trabajos</h2>
+   <p class="lead">Reels y anuncios verticales hechos de punta a punta: idea, imagen, motion, edición y sonido. Tocá cualquiera para verlo con audio.</p>
+   <div class="works" id="works"></div>
+  </div>
+ </section>
+
+ <section class="band dark" id="servicios">
+  <div class="in">
+   <h2>Qué hago</h2>
+   <p class="lead">Todo sale de una misma mesa de trabajo, así el video se piensa entero y no por partes.</p>
+   <div class="svc" id="svc"></div>
+  </div>
+ </section>
+
+ <section class="band" id="sobre-mi">
+  <div class="in about">
+   <p class="big kr">Vengo del dibujo. <span class="it">Ahora lo muevo.</span></p>
+   <div>
+    <p>Soy Giuliano Sanguinetti, diseñador y animador digital de Córdoba, Argentina. Empecé como ilustrador y concept artist, y hoy llevo esa mirada a la edición y al motion graphics: cada pieza arranca con una idea clara, se arma cuadro por cuadro y se termina con el sonido a tiempo con cada corte.</p>
+    <p>Trabajo en formato vertical para redes, con textos pensados para leerse bien en el celular y sin necesidad de filmar: si falta una imagen o un clip, lo genero o lo dibujo.</p>
+    <dl class="cv">
+     <dt>Experiencia</dt><dd>Diseñador visual en Globalthink · 2024–2026</dd><dd>Ilustración y concept para el corto animado «Ñamke» · 2024</dd>
+     <dt>Formación</dt><dd>Licenciatura en Diseño y Animación Digital, Universidad Siglo 21 · 2022–2026</dd><dd>Mentoría en diseño conceptual de entornos, Raphael Lacoste Academy · 2025</dd>
+     <dt>Herramientas</dt><dd class="chips"><span class="chip">Premiere Pro</span><span class="chip">After Effects</span><span class="chip">Photoshop</span><span class="chip">Maya</span><span class="chip">ZBrush</span><span class="chip">Substance 3D Painter</span></dd>
+    </dl>
+    <p style="margin-top:18px"><a href="https://giuliano-sanguinettivercelapp.vercel.app" style="color:var(--or2);font-weight:600">Ver mi portfolio de ilustración y concept art ↗</a></p>
+   </div>
+  </div>
+ </section>
+
+ <section class="band cta" id="contacto">
+  <div class="in">
+   <h2 class="kr">¿Tenés una idea? <span class="it">Hagámosla.</span></h2>
+   <p style="margin:0;font-size:18px">Contame qué querés mostrar y armamos el video. Trabajo de forma remota desde Córdoba.</p>
+   <div class="btns" id="btns"></div>
+   <p class="note" id="note"></p>
+  </div>
+ </section>
+</main>
+
+<footer><span>Giuli Edits · Giuliano Sanguinetti · Córdoba, Argentina (GMT-3) · Disponible para trabajo remoto</span><a href="#inicio">Volver arriba ↑</a></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Reproductor">
+ <button class="mbtn close" id="mclose" aria-label="Cerrar">✕</button>
+ <video id="mvideo" controls playsinline></video>
+ <div class="info">
+  <div class="k" id="mk"></div><h3 id="mt"></h3><p id="md"></p><div class="chips" id="mc"></div>
+  <div class="mnav"><button class="mbtn" id="mprev" aria-label="Anterior">←</button><button class="mbtn" id="mnext" aria-label="Siguiente">→</button></div>
+ </div>
+</div>
+
+<script>
+{
+/* ======= EDITAR ACÁ: links de contacto ======= */
+const CONTACT={whatsapp:'+54 9 351 280 8187',instagram:'@indomitable.art.spirit',mail:'giulianosanguinetti2002@gmail.com'};
+
+const REELS=[
+ {id:'reel',t:'De la idea al movimiento',k:'Reel personal · Giuli Edits',d:'36 s',r:['Ilustración','Motion','Edición','Diseño sonoro'],x:'Mi carta de presentación: cómo una idea dibujada pasa a tener forma, movimiento y sonido.'},
+ {id:'tazaA',t:'Tazamanía · Una taza para vos',k:'Pieza conceptual · E-commerce',d:'24 s',r:['Motion','Edición','Producto con IA','Sonido'],x:'Anuncio para una tienda de tazas temáticas: cada personalidad tiene su taza, con productos generados con IA y animados a ritmo.'},
+ {id:'tazaB',t:'Tazamanía · Tu café merece algo mejor',k:'Pieza conceptual · E-commerce',d:'21 s',r:['Tipografía animada','Motion','Edición'],x:'Otra versión del mismo producto con otro gancho: íconos dentro de las palabras, una taza que se transforma y transiciones a tiempo con la música.'},
+ {id:'brava',t:'Brava · Smash burgers',k:'Pieza conceptual · Gastronomía',d:'21 s',r:['Motion','Collage','Edición','Diseño sonoro'],x:'Reel para una hamburguesería: la hamburguesa se arma capa por capa, fuego, collage y un menú que pasa al ritmo del beat.'},
+ {id:'ducktoc',t:'ducktoc · Tu web es linda',k:'Para ducktoc · Diseño web',d:'12 s',r:['Motion UI','Edición','Copy'],x:'Reel para un estudio de diseño web: los errores que hacen que una web linda no venda, contados con pantallas animadas.'}
+];
+const SVC=[
+ ['Reels y anuncios','Edición para redes en formato vertical, con un gancho en los primeros segundos y un ritmo que sostiene hasta el final.','<rect x="13" y="4" width="18" height="36" rx="4" fill="none" stroke="#F28A55" stroke-width="2.5"/><path d="m19 16 9 6-9 6z" fill="#F28A55"/>'],
+ ['Motion graphics','Tipografía animada, transiciones e interfaces en movimiento, hechas a medida para cada marca.','<path d="M6 32c8-20 14-20 18-6s10 14 14-6" fill="none" stroke="#F28A55" stroke-width="2.5" stroke-linecap="round"/><circle cx="38" cy="20" r="4" fill="#F28A55"/>'],
+ ['Sonido a tiempo','Música elegida para cada pieza y efectos sincronizados con cada corte, para que el video también se escuche bien.','<path d="M6 22h4M14 14v16M20 8v28M26 16v12M32 11v22M38 20v4" stroke="#F28A55" stroke-width="2.5" stroke-linecap="round"/>'],
+ ['Imagen con IA e ilustración','Productos, escenas y personajes generados o dibujados cuando no hay material filmado. Sin cámara y sin producción.','<path d="M8 36 30 14l6 6-22 22H8z" fill="none" stroke="#F28A55" stroke-width="2.5" stroke-linejoin="round"/><path d="m33 5 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#F28A55"/>']
+];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.getElementById(s);
+const src=id=>'v/'+id+'.mp4', pst=id=>'v/'+id+'.jpg';
+const chips=r=>r.map(c=>`<span class="chip">${c}</span>`).join('');
+
+/* ---- waving title ---- */
+const title=$('title');
+const word='PORTFOLIO';
+title.innerHTML=[...word].map(c=>`<span class="col" aria-hidden="true"><span class="g">${c}</span><span class="f">${c}</span><span class="o">${c}</span></span>`).join('');
+const cols=[...title.querySelectorAll('.col')].map(c=>[c.querySelector('.f'),c.querySelector('.o')]);
+function wave(ms){
+ const t=ms/1000;
+ cols.forEach(([f,o],i)=>{
+  const p=t*1.6-i*.55, c=Math.cos(p), s=Math.sin(p);
+  f.style.transform=`translateY(${-.3*c}em) rotateX(${38*s}deg)`;
+  o.style.transform=`translateY(${.3*c}em) rotateX(${-38*s}deg)`;
+  f.style.zIndex=c>0?1:2; o.style.zIndex=c>0?2:1;
+ });
+ if(!RM)requestAnimationFrame(wave);
+}
+requestAnimationFrame(wave);
+
+/* ---- wheel ---- */
+const wheel=$('wheel'),hub=$('hub'),me=$('me');
+const N=12,STEP=360/N;
+const cards=[];
+for(let i=0;i<N;i++){
+ const r=REELS[i%REELS.length];
+ const b=document.createElement('button');
+ b.className='card';b.dataset.i=i%REELS.length;
+ b.setAttribute('aria-label','Ver '+r.t);
+ b.innerHTML=`<img src="${pst(r.id)}" alt=""><span class="tag">${r.t}</span>`;
+ wheel.appendChild(b);cards.push({el:b,r,v:null,on:false});
+}
+let G={};
+function geo(){
+ const W=wheel.clientWidth,H=wheel.clientHeight;
+ const h=Math.min(H*.6,W*.92), w=h*9/16;
+ const cy=H*.1+h/2+Math.max(H*.7,w*2.05);
+ const R=cy-(H*.08+h/2);
+ G={W,H,w,h,cx:W/2,cy,R};
+ cards.forEach(c=>{c.el.style.width=w+'px';c.el.style.height=h+'px'});
+ const rc=Math.min(R*.5,Math.max(W*.3,Math.min(W*.42,190)));
+ Object.assign(hub.style,{width:2*rc+'px',height:2*rc+'px',left:(W/2-rc)+'px',top:(cy-rc)+'px'});
+ me.style.top=Math.min(cy-rc*.74,H-64)+'px';
+}
+let rot=0,vel=0,drag=null,last=performance.now(),idle=0,target=null;
+function place(){
+ const {w,h,cx,cy,R}=G;
+ cards.forEach((c,i)=>{
+  let a=((i*STEP+rot)%360+540)%360-180;
+  const rad=a*Math.PI/180;
+  const x=cx+R*Math.sin(rad)-w/2, y=cy-R*Math.cos(rad)-h/2;
+  c.el.style.transform=`translate(${x}px,${y}px) rotate(${a}deg)`;
+  c.el.style.zIndex=Math.round(30-Math.abs(a)/6);
+  c.el.classList.toggle('front',Math.abs(a)<STEP/2);
+  c.el.style.visibility=Math.abs(a)>100?'hidden':'visible';
+  const want=Math.abs(a)<STEP*1.6;
+  if(want!==c.on){c.on=want;
+   if(want){if(!c.v){c.v=document.createElement('video');Object.assign(c.v,{muted:true,loop:true,playsInline:true,preload:'auto',poster:pst(c.r.id),src:src(c.r.id)});c.v.setAttribute('muted','');c.el.prepend(c.v);c.el.querySelector('img').remove()}
+    c.v.play().catch(()=>{})}
+   else if(c.v)c.v.pause();
+  }
+ });
+}
+function tick(now){
+ const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!drag){
+  if(target!==null){const d=target-rot;rot+=d*Math.min(1,dt*7);if(Math.abs(d)<.05){rot=target;target=null}}
+  else if(Math.abs(vel)>.5){rot+=vel*dt;vel*=Math.pow(.08,dt)}
+  else{vel=0;idle+=dt;if(!RM&&idle>1.5)rot-=6*dt}
+ }
+ place();requestAnimationFrame(tick);
+}
+const degPx=()=>57.3/G.R;
+wheel.addEventListener('pointerdown',e=>{
+ if(e.target.closest('.arrow,.me'))return;
+ drag={x:e.clientX,y:e.clientY,r:rot,t:performance.now(),moved:false,lx:e.clientX,lt:performance.now(),card:e.target.closest('.card')};
+ target=null;vel=0;
+});
+addEventListener('pointermove',e=>{
+ if(!drag)return;
+ const dx=e.clientX-drag.x;
+ if(!drag.moved&&Math.abs(dx)>6&&Math.abs(dx)>Math.abs(e.clientY-drag.y)){drag.moved=true;wheel.classList.add('drag');try{wheel.setPointerCapture(e.pointerId)}catch(_){}}
+ if(drag.moved){rot=drag.r+dx*degPx();const n=performance.now();vel=(e.clientX-drag.lx)*degPx()/Math.max(.008,(n-drag.lt)/1000);drag.lx=e.clientX;drag.lt=n}
+});
+addEventListener('pointerup',()=>{
+ if(!drag)return;
+ if(!drag.moved&&drag.card)open(+drag.card.dataset.i);
+ else{const proj=rot+vel*.35;target=Math.round(proj/STEP)*STEP;vel=0}
+ drag=null;idle=0;wheel.classList.remove('drag');
+});
+addEventListener('pointercancel',()=>{drag=null;wheel.classList.remove('drag')});
+const step=d=>{target=Math.round(((target??rot)+d*STEP)/STEP)*STEP;idle=-2};
+$('prev').onclick=()=>step(1);$('next').onclick=()=>step(-1);
+wheel.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){step(1);e.preventDefault()}if(e.key==='ArrowRight'){step(-1);e.preventDefault()}});
+wheel.addEventListener('click',e=>{const c=e.target.closest('.card');if(c&&e.detail===0)open(+c.dataset.i)});
+new ResizeObserver(()=>{geo();place()}).observe(wheel);
+geo();place();requestAnimationFrame(tick);
+
+/* ---- works grid ---- */
+const works=$('works');
+works.innerHTML=REELS.map((r,i)=>`<button class="work" data-i="${i}"><div class="thumb"><img src="${pst(r.id)}" alt="" loading="lazy"><span class="play"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z" fill="#16120F"/></svg></span></div><div><div class="k">${r.k} · <span style="white-space:nowrap">${r.d}</span></div><h3>${r.t}</h3></div><div class="chips">${chips(r.r)}</div></button>`).join('');
+works.querySelectorAll('.work').forEach(b=>{
+ const th=b.querySelector('.thumb'),r=REELS[+b.dataset.i];let v=null;
+ b.onclick=()=>open(+b.dataset.i);
+ if(matchMedia('(hover:hover)').matches){
+  b.onmouseenter=()=>{if(!v){v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,src:src(r.id)});v.setAttribute('muted','');th.insertBefore(v,th.querySelector('.play'))}v.play().catch(()=>{})};
+  b.onmouseleave=()=>{if(v)v.pause()};
+ }
+});
+$('svc').innerHTML=SVC.map(s=>`<div class="s"><svg viewBox="0 0 44 44">${s[2]}</svg><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('');
+
+/* ---- contact ---- */
+const btns=[];
+if(CONTACT.whatsapp)btns.push(`<a class="btn" href="https://wa.me/${CONTACT.whatsapp.replace(/\D/g,'')}">WhatsApp ${CONTACT.whatsapp}</a>`);
+if(CONTACT.instagram)btns.push(`<a class="btn alt" href="https://instagram.com/${CONTACT.instagram.replace('@','')}">Instagram ${CONTACT.instagram}</a>`);
+if(CONTACT.mail)btns.push(`<a class="btn alt" href="mailto:${CONTACT.mail}">${CONTACT.mail}</a>`);
+if(btns.length)$('btns').innerHTML=btns.join('');
+else{$('btns').innerHTML='<a class="btn" href="#trabajos">Ver trabajos</a>';$('note').textContent='Los links de WhatsApp, Instagram y mail se suman acá.'}
+
+/* ---- modal ---- */
+const modal=$('modal'),mv=$('mvideo');let cur=0,back=null;
+function open(i){
+ cur=(i+REELS.length)%REELS.length;const r=REELS[cur];
+ $('mk').textContent=r.k+' · '+r.d;$('mt').textContent=r.t;$('md').textContent=r.x;$('mc').innerHTML=chips(r.r);
+ mv.poster=pst(r.id);mv.src=src(r.id);mv.muted=false;
+ if(!modal.classList.contains('on')){back=document.activeElement;modal.classList.add('on');document.body.style.overflow='hidden'}
+ mv.play().catch(()=>{mv.muted=true;mv.play().catch(()=>{})});
+ $('mclose').focus();
+ cards.forEach(c=>c.v&&c.v.pause());
+}
+function close(){modal.classList.remove('on');mv.pause();mv.removeAttribute('src');mv.load();document.body.style.overflow='';cards.forEach(c=>{c.on=false});if(back)back.focus()}
+$('mclose').onclick=close;$('mprev').onclick=()=>open(cur-1);$('mnext').onclick=()=>open(cur+1);
+modal.addEventListener('click',e=>{if(e.target===modal)close()});
+addEventListener('keydown',e=>{if(!modal.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowRight')open(cur+1);if(e.key==='ArrowLeft')open(cur-1)});
+wheel.tabIndex=0;
+}
+</script>
+</body>
+</html>
